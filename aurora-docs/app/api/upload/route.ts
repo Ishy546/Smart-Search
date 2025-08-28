@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import pdf from "pdf-parse/lib/pdf-parse.js"; 
 import mammoth from "mammoth"
+import { splitDocument, createAndStoreEmbeddings } from '@/app/utils/standAlone'
 
 export const config = {
   api: {
@@ -30,6 +31,7 @@ export async function POST(req: Request) {
     const result = await mammoth.extractRawText({ buffer })
     text = result.value
   }
-
+  const documentSplittedIntoChunks = await splitDocument(text)
+  await createAndStoreEmbeddings(documentSplittedIntoChunks)
   return NextResponse.json({ text })
 }

@@ -10,7 +10,7 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
+# testingecho "/node_modules" >> .gitignore
 /coverage
 
 # next.js
