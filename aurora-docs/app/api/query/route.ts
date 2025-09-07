@@ -13,7 +13,7 @@ async function findNearestMatch(queryEmbedding: number[]): Promise<string> {
   if (error) throw new Error(`Supabase match error: ${error.message}`);
   if (!data) return "";// if no results, no context was found
 
-  return data.map((obj: any) => obj.content).join("\n");//loops over matching rows in teh database and joins them
+  return data.map((obj: {content: string}) => obj.content).join("\n");//loops over matching rows in teh database and joins them
 }
 
 // --- Chat Completion ---
@@ -57,11 +57,10 @@ export async function POST(req: Request){
     const answer = await getChatCompletion(context, query)
 
     return NextResponse.json({ answer })
-    }catch (error: any){
-        console.error("Error in /api/query:", error);
-    return NextResponse.json(
-      { error: error.message || "Unknown error" },
-      { status: 500 }
-    );
+    }catch (error: unknown){
+      console.error("Error in /api/query:", error);
+    const message =
+    error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
