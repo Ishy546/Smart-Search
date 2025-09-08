@@ -1,17 +1,38 @@
-# Smart-Search
+## AI-Powered Document Search Engine
 
-This is an AI-powered document search engine — think of it like a "custom Google" for PDFs, Word docs, etc. that users upload. 
+A simple RAG-based search tool that lets users upload 
+PDFs or DOCX files and query their contents through a chatbot interface.
 
-Instead of keyword-based search (like Ctrl+F), it uses semantic search and AI-generated answers. A user can ask, "What are the key takeaways from this report?" and the system responds intelligently using the content in the uploaded files. 
+Demo
 
-The purpose is to let users ask natural-language questions about their documents and get contextual, intelligent answers — no need to read the whole thing or remember where things are. 
+📍 https://smart-search-xi.vercel.app 
 
-This is super useful for: 
+**Features**
 
-Analysts reviewing long reports 
+Upload and parse PDF/DOCX files using pdf-parse
+ and Mammoth.
 
-Lawyers parsing case files 
+Splits documents into chunks with 
+LangChain RecursiveTextSplitter for efficient embedding.
 
-Students studying PDFs 
+Generate OpenAI embeddings and store them 
+in a Supabase vector store.
 
-Teams searching through internal documentation 
+Perform semantic similarity search (match_documents) 
+to retrieve the most relevant chunks.
+
+Use OpenAI Chat Completions API to generate answers 
+grounded in document content.
+
+Limit users to 10 queries per session 
+for controlled demo use.
+
+Deployed on Vercel for fast, serverless hosting.
+
+Tech Stack
+
+Frontend/Deployment: Next.js, Vercel
+Data Processing: pdf-parse, Mammoth, LangChain
+Vector Database: Supabase (pgvector)
+LLM Integration: OpenAI embeddings + Chat Completions API
+
